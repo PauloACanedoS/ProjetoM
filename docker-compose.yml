@@ -9,17 +9,20 @@ services:
     # Mapeando a porta interna 3000. O Nginx depois vai apontar para 127.0.0.1:3000
     ports:
       - "127.0.0.1:3000:3000"
+    # Arquivo .env (não comitar). Para produção, prefira Docker secrets ou um gerenciador de segredos.
+    env_file:
+      - .env
     environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - DATABASE_URL=postgresql://madasatec:187.77.228.4mar@madasatec-db:5432/madasatec
-      - N8N_WEBHOOK_URL=https://n8n.srv1841035.hstgr.cloud/webhook/projeto-m
-      - SMTP_HOST=smtp.gmail.com
-      - SMTP_PORT=587
-      - SMTP_SECURE=false
-      - SMTP_USER=can23dopaulo@gmail.com
-      - SMTP_PASSWORD=187.77.228.4mar
-      - SESSION_SECRET=187.77.228.4mar
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_SECURE=${SMTP_SECURE}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SESSION_SECRET=${SESSION_SECRET}
     # O comando abaixo é um placeholder para manter o container vivo caso ainda vá subir o código.
     # Quando tiver o package.json, substitua por: command: npm start
     command: tail -f /dev/null 
@@ -34,14 +37,16 @@ services:
     image: postgres:16-alpine
     container_name: madasatec-db
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      - POSTGRES_DB=madasatec
-      - POSTGRES_USER=madasatec
-      - POSTGRES_PASSWORD=187.77.228.4mar
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - madasatec_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U madasatec -d madasatec"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
