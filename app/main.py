@@ -1,32 +1,39 @@
-from fastapi import FastAPI, Form, HTTPException
-from app.n8n_client import enviar_para_n8n
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from app.n8n_client import enviar_perfil_n8n
 
 app = FastAPI(title="Madasatec - Análise de Licitações")
 
-# Rota simples para confirmar que o container está rodando perfeitamente[cite: 1]
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
+# Monta os arquivos estáticos e templates
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/templates")
 
-# Rota que receberá os filtros digitados pelo usuário no formulário do site
-@app.post("/analisar")
-def processar_formulario(
+@app.get("/", response_class=HTMLResponse)
+def read_root(request: Request):
+    # Renderiza o formulário principal de entrada
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.post("/analisar", response_class=HTMLResponse)
+def analisar_licitacao(
+    request: Request,
     municipio: str = Form(...),
+    periodo_anos: int = Form(...),
     ano: int = Form(...),
-    numero_licitacao: str = Form(...)
+    numero_licitacao: str = Form(...),
+    ibge_dataset: str = Form(...),
+    link_transparencia: str = Form(...)
 ):
-    # 1. Valida e normaliza os valores (etapa de segurança)[cite: 1]
-    municipio = municipio.strip()
-    numero_licitacao = numero_licitacao.strip()
+    # Envia os dados completos de forma síncrona para o n8n
+    resultado = enviar_perfil_n8n(
+        municipio=municipio.strip(),
+        periodo_anos=periodo_anos,
+        ano=ano,
+        numero_licitacao=numero_licitacao.strip(),
+        ibge_dataset=ibge_dataset.strip(),
+        link_transparencia=link_transparencia.strip()
+    )
     
-    # 2. Envia os dados limpos para o cliente do n8n processar[cite: 1]
-    resultado = enviar_para_n8n(municipio, ano, numero_licitacao)
-    
-    if resultado.get("status") == "erro":
-        raise HTTPException(status_code=500, detail="Falha na comunicação com o n8n.")
-        
-    # 3. Exibe o resultado ao usuário sem revelar credenciais internas[cite: 1]
-    return {
-        "mensagem": "Consulta processada com sucesso!",
-        "dados_retornados": resultado
-    }
+    # Retorna a página de resultados com o JSON processado pelo n8n
+    return templates.TemplateResponse("resultado.html", {"request": request, "resultado": resultado})
