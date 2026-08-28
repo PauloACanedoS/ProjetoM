@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Auditoria - Madasatec</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f6f9; padding: 40px;">
+    <div style="max-width: 700px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #1e293b; margin-top: 0;">Relatório de Auditoria</h2>
+        
+        <div style="background: #f8fafc; padding: 15px; border-radius: 6px; border-left: 4px solid #0284c7; margin-bottom: 20px;">
+            <p><strong>Status:</strong> {{ resultado.status | default('Processado') }}</p>
+            <p><strong>Resumo:</strong> {{ resultado.resumo_analise | default(resultado.resumo | default('Análise concluída com sucesso.')) }}</p>
+        </div>
+
+        <h3 style="color: #334155; font-size: 18px;">Detalhes da Consulta</h3>
+        <pre style="background: #1e293b; color: #f8fafc; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 13px;">{{ resultado | tojson(indent=2) }}</pre>
+
+        <div style="margin-top: 25px;">
+            <a href="/" style="background: #64748b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">Nova Consulta</a>
+        </div>
+    </div>
+</body>
+</html>
