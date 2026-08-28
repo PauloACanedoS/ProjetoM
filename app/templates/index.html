@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madasatec - Análise de Licitações</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f6f9; padding: 40px;">
+    <div style="max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #1e293b; margin-top: 0;">Auditoria Inteligente de Licitações</h2>
+        <p style="color: #64748b;">Preencha os dados abaixo para iniciar a análise cruzada com o n8n.</p>
+        
+        <form action="/analisar" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+            <div>
+                <label style="font-weight: bold; font-size: 14px;">Município:</label>
+                <input type="text" name="municipio" value="Almirante Tamandaré" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                    <label style="font-weight: bold; font-size: 14px;">Período (Anos):</label>
+                    <input type="number" name="periodo_anos" value="5" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                </div>
+                <div style="flex: 1;">
+                    <label style="font-weight: bold; font-size: 14px;">Ano da Licitação:</label>
+                    <input type="number" name="ano" value="2026" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+                </div>
+            </div>
+
+            <div>
+                <label style="font-weight: bold; font-size: 14px;">Número da Licitação:</label>
+                <input type="text" name="numero_licitacao" value="123/2026" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+            </div>
+
+            <div>
+                <label style="font-weight: bold; font-size: 14px;">Dataset IBGE:</label>
+                <input type="text" name="ibge_dataset" value="pr_faces_de_logradouros_2022" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+            </div>
+
+            <div>
+                <label style="font-weight: bold; font-size: 14px;">Link de Transparência (Betha):</label>
+                <input type="text" name="link_transparencia" value="https://transparencia.betha.cloud/#/nP_k8chtD340jA5YhS5Cow==/consulta/65701" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+            </div>
+
+            <button type="submit" style="background: #0284c7; color: white; padding: 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 10px;">Executar Auditoria</button>
+        </form>
+    </div>
+</body>
+</html>
