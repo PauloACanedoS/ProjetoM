@@ -22,6 +22,8 @@ def enviar_perfil_n8n(
         "numero_licitacao": numero_licitacao,
         "ibge_dataset": ibge_dataset,
         "link_transparencia": link_transparencia
+        "promotor_usuario": promotor_usuario,
+        "link_transparencia_betha": link_transparencia_betha
     }
     
     headers = {
