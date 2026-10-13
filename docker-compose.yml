@@ -15,8 +15,35 @@ services:
         condition: service_healthy
     networks:
       - madasatec_net
+      - default
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.madasatec.rule=Host(`app.paulocanedosoftware.tech`)"
       - "traefik.http.routers.madasatec.entrypoints=web,websecure"
       - "traefik.http.services.madasatec.loadbalancer.server.port=3000"
+      - "traefik.docker.network=n8n_default"
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: madasatec-db
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d$$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - madasatec_net
+
+volumes:
+  pgdata:
+
+networks:
+  madasatec_net:
+  default:
+    external: true
+    name: n8n_default
