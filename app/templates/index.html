@@ -1,138 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madasatec - Auditoria Inteligente de Licitações</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            padding: 40px;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 600px;
-            width: 100%;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .header-logo img {
-            height: 48px;
-            width: auto;
-        }
-        h2 {
-            font-size: 22px;
-            color: #1e293b;
-            margin: 0 0 5px 0;
-        }
-        p.subtitle {
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            font-size: 13px;
-            color: #333;
-            margin-bottom: 6px;
-        }
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        .row {
-            display: flex;
-            gap: 12px;
-        }
-        .col {
-            flex: 1;
-        }
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background-color: #0b6938;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .btn-submit:hover {
-            background-color: #084f29;
-        }
-    </style>
+    <title>Madasatec</title>
+    <!-- Estilos ou CDN do Tailwind/Bootstrap, se utilizados -->
 </head>
 <body>
-
-<div class="container">
-    <div class="header-logo">
-        <img src="/app/logotipoM.jpeg" alt="Logotipo Madasatec">
-        <div>
-            <h2>Auditoria Inteligente de Licitações</h2>
-        </div>
+    <div class="container mx-auto p-4">
+        <header class="flex items-center justify-between mb-8">
+            <!-- Insira aqui a referência ao novo logotipo -->
+            <h1 class="text-2xl font-bold">Madasatec - Sistema de Gestão</h1>
+        </header>
+        <main>
+            <!-- Campos atualizados do sistema -->
+            <p>Bem-vindo à nova interface do Madasatec.</p>
+        </main>
     </div>
-    
-    <p class="subtitle">Preencha os dados abaixo para iniciar a análise cruzada com o n8n.</p>
-
-    <form action="/analisar" method="POST">
-        <div class="form-group">
-            <label for="licitacao">Licitação:</label>
-            <input type="text" id="licitacao" name="licitacao" placeholder="Ex: Objeto da licitação ou concorrência" required>
-        </div>
-
-        <div class="form-group">
-            <label for="municipio">Município:</label>
-            <input type="text" id="municipio" name="municipio" value="Almirante Tamandaré" required>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label for="periodo_anos">Período (Anos):</label>
-                    <input type="number" id="periodo_anos" name="periodo_anos" min="1" max="5" value="5" required>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="ano_licitacao">Ano da Licitação:</label>
-                    <input type="number" id="ano_licitacao" name="ano_licitacao" min="2000" max="2100" value="2026" required>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="numero_licitacao">Número da Licitação:</label>
-            <input type="text" id="numero_licitacao" name="numero_licitacao" placeholder="Ex: 123/2026" required>
-        </div>
-
-        <!-- NOTA: Campos 'Dataset IBGE' e 'Link de Transparência Betha' removidos conforme solicitado. -->
-
-        <button type="submit" class="btn-submit">Executar Auditoria</button>
-    </form>
-</div>
-
 </body>
 </html>
