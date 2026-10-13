@@ -6,8 +6,9 @@ services:
     env_file:
       - .env
     ports:
-      # Expõe a aplicação somente localmente por segurança
-      - "127.0.0.1:3000:3000"
+      - "3000:3000"
+    volumes:
+      - .:/app
     depends_on:
       postgres:
         condition: service_healthy
