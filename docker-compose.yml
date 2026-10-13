@@ -1,5 +1,4 @@
-services:
-  app:
+app:
     build: .
     container_name: madasatec-app
     restart: unless-stopped
@@ -9,7 +8,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-    command: uvicorn main:app --host 0.0.0.0 --port 3000 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 3000 --reload
     depends_on:
       postgres:
         condition: service_healthy
@@ -22,28 +21,3 @@ services:
       - "traefik.http.routers.madasatec.entrypoints=web,websecure"
       - "traefik.http.services.madasatec.loadbalancer.server.port=3000"
       - "traefik.docker.network=n8n_default"
-
-  postgres:
-    image: postgres:15-alpine
-    container_name: madasatec-db
-    restart: unless-stopped
-    env_file:
-      - .env
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d$$POSTGRES_DB"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - madasatec_net
-
-volumes:
-  pgdata:
-
-networks:
-  madasatec_net:
-  default:
-    external: true
-    name: n8n_default
